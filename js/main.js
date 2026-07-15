@@ -266,6 +266,7 @@
   const modalConfirm = document.getElementById("modalConfirm");
   const modalCancel = document.getElementById("modalCancel");
   const modalClose = document.getElementById("modalClose");
+  const modalInstapay = document.getElementById("modalInstapay");
 
   let selectedPlan = { name: "", price: "" };
   let lastFocused = null;
@@ -314,6 +315,11 @@
       "https://wa.me/" + COACH_WHATSAPP + "?text=" + encodeURIComponent(message);
     window.open(url, "_blank", "noopener");
     closePlanModal();
+  });
+
+  // InstaPay opens in a new tab (it's an anchor); just close the dialog behind it
+  modalInstapay.addEventListener("click", () => {
+    setTimeout(closePlanModal, 150);
   });
 
   modalCancel.addEventListener("click", closePlanModal);
