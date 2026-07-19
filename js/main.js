@@ -234,6 +234,7 @@
     document.body.style.overflow = "hidden";
     requestAnimationFrame(() => lightbox.classList.add("show"));
     lightboxClose.focus();
+    updatePriceBar();
   };
 
   const closeLightbox = () => {
@@ -242,6 +243,7 @@
     setTimeout(() => {
       lightbox.hidden = true;
       lightboxImg.src = "";
+      updatePriceBar();
     }, 350);
   };
 
@@ -280,6 +282,7 @@
     document.body.style.overflow = "hidden";
     requestAnimationFrame(() => planModal.classList.add("show"));
     modalConfirm.focus();
+    updatePriceBar();
   };
 
   const closePlanModal = () => {
@@ -288,6 +291,7 @@
     setTimeout(() => {
       planModal.hidden = true;
       if (lastFocused) lastFocused.focus();
+      updatePriceBar();
     }, 350);
   };
 
@@ -372,6 +376,44 @@
       window.open(url, "_blank", "noopener");
       contactForm.reset();
     });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Sticky price bar                                                   */
+  /*  Appears once you scroll past the hero, hides while the pricing     */
+  /*  section or footer is in view, or while a dialog is open.           */
+  /* ------------------------------------------------------------------ */
+  const priceBar = document.getElementById("priceBar");
+  const pricingSection = document.getElementById("pricing");
+  const footerEl = document.querySelector(".footer");
+  const inView = new Set();
+
+  function updatePriceBar() {
+    if (!priceBar) return;
+    const pastHero = window.scrollY > window.innerHeight * 0.55;
+    const dialogOpen =
+      (planModal && !planModal.hidden) || (lightbox && !lightbox.hidden);
+    const show = pastHero && inView.size === 0 && !dialogOpen;
+    priceBar.classList.toggle("show", show);
+    priceBar.setAttribute("aria-hidden", String(!show));
+  }
+
+  if (priceBar && "IntersectionObserver" in window) {
+    const barObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) inView.add(entry.target);
+          else inView.delete(entry.target);
+        });
+        updatePriceBar();
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.01 }
+    );
+    if (pricingSection) barObserver.observe(pricingSection);
+    if (footerEl) barObserver.observe(footerEl);
+    window.addEventListener("scroll", updatePriceBar, { passive: true });
+    window.addEventListener("resize", updatePriceBar, { passive: true });
+    updatePriceBar();
   }
 
   /* ------------------------------------------------------------------ */
