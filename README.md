@@ -26,7 +26,7 @@ python3 -m http.server 8000
 
 ## Sections
 
-Hero · Marquee · About · Achievements (animated counters) · Certifications (with lightbox zoom) · Services · Pricing · Promo band · Testimonials slider · Instagram gallery · Podcast · FAQ accordion · Contact · Footer
+Hero · Marquee · About · Achievements (animated counters) · Certifications (with lightbox zoom) · Services · Pricing · Promo band · Testimonials slider · Instagram gallery · FAQ accordion · Contact · Footer
 
 ## Online coaching purchase flow
 
@@ -47,6 +47,5 @@ The contact form works the same way — it opens WhatsApp with the visitor's nam
 
 ## Things still to update
 
-- **Podcast episodes** — the three episode cards currently link to the coach's Instagram. Replace each `Listen Now` href with the real YouTube / Spotify / Apple Podcasts links.
 - **Testimonials** — the four client stories are realistic placeholders; swap in real client feedback when available.
 - **Hero photo** — see `assets/images/hero-poster.jpg`; drop in the professional portrait when the file is available.
